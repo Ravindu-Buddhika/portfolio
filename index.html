@@ -288,117 +288,197 @@
         .gemini-color { color: #75aaff; }     /* Gemini Purple/Blue */
         .flutter-color { color: #02569b; }    /* Flutter Blue */
 
-        /* ================= HERO MOBILE VERTICAL LAYOUT ================= */
+        /* ================= GLASS NAVBAR & DRAWER ================= */
+        .glass-navbar {
+            background: rgba(0, 0, 0, 0.55) !important;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 991.98px) {
+            /* Mobile එකේදී Toggle Left & Brand Right කිරීම */
+            .glass-navbar .container-fluid {
+                flex-direction: row-reverse;
+            }
+
+            /* වම් පැත්තෙන් බාගෙට එන Glass Sidebar Drawer එක */
+            .mobile-glass-drawer {
+                width: 68% !important;
+                max-width: 280px;
+                height: 100dvh !important;
+                background: rgba(12, 12, 12, 0.78) !important;
+                backdrop-filter: blur(18px);
+                -webkit-backdrop-filter: blur(18px);
+                border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
+                box-shadow: 10px 0 35px rgba(0, 0, 0, 0.85);
+                z-index: 1055 !important;
+            }
+
+            .mobile-glass-drawer .nav-link {
+                font-family: 'Audiowide', cursive;
+                font-size: 0.95rem;
+                padding: 12px 16px;
+                border-radius: 10px;
+                margin-bottom: 6px;
+                transition: all 0.25s ease;
+            }
+
+            .mobile-glass-drawer .nav-link:hover,
+            .mobile-glass-drawer .nav-link.active {
+                background: rgba(255, 255, 255, 0.1);
+                color: #36BCF7 !important;
+                transform: translateX(5px);
+            }
+        }
+
+        /* ================= HERO MOBILE VERTICAL LAYOUT & ANIMATIONS ================= */
         @media (max-width: 768px) {
-    #hero-section {
-        height: 100svh !important;
-        min-height: 600px;
-    }
+            #hero-section {
+                height: 100svh !important;
+                min-height: 600px;
+                opacity: 1 !important; /* AOS container fade override */
+            }
 
-    .hero-bg-img {
-        width: 100%;
-        object-position: 65% center;
-    }
+            /* 1. පින්තූරය පේන්නේ නැතුව තිබිලා හිමීට මතු වීම */
+            .hero-bg-img {
+                width: 100%;
+                object-position: 65% center;
+                opacity: 0;
+                animation: mobileImgFadeIn 1.8s ease-out 0.1s forwards;
+            }
 
-    /* Align the fade-up animation for mobile */
-    #hero-section [data-aos="fade-up"] {
-        opacity: 0;
-        transform: translateY(35px) !important;
-        animation: mobileHeroFadeUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards !important;
-    }
+            /* 2. ඊට පස්සේ නම සහ buttons යට ඉඳන් උඩට smooth විදියට ඒම */
+            #hero-section [data-aos="fade-up"] {
+                opacity: 0;
+                transform: translateY(45px) !important;
+                animation: mobileTextSlideUp 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards !important;
+            }
 
-    /* Align the vertical name */
-    .hero-name-vertical {
-        position: absolute;
-        left: 10px;
-        bottom: 95px;
-        writing-mode: vertical-rl;
-        transform: rotate(180deg);
-        font-size: clamp(3.3rem, 7.2svh, 4.3rem) !important;
-        line-height: 1;
-        margin: 0;
-        white-space: nowrap;
-        letter-spacing: 1px;
-        z-index: 4;
-    }
+            /* වම් පැත්තේ යට ඉඳන් උඩට තියෙන නම */
+            .hero-name-vertical {
+                position: absolute;
+                left: 10px;
+                bottom: 95px;
+                writing-mode: vertical-rl;
+                transform: rotate(180deg);
+                font-size: clamp(3.3rem, 7.2svh, 4.3rem) !important;
+                line-height: 1;
+                margin: 0;
+                white-space: nowrap;
+                letter-spacing: 1px;
+                z-index: 4;
+            }
 
-    /* Align the CTA buttons */
-    .hero-cta-group {
-        position: absolute;
-        bottom: 95px;
-        left: 88px;
-        right: 20px;
-        display: flex !important;
-        flex-direction: row;
-        gap: 10px !important;
-        width: auto !important;
-        z-index: 4;
-    }
+            /* Buttons ටික යටින් පෙළගැස්වීම */
+            .hero-cta-group {
+                position: absolute;
+                bottom: 95px;
+                left: 88px;
+                right: 20px;
+                display: flex !important;
+                flex-direction: row;
+                gap: 10px !important;
+                width: auto !important;
+                z-index: 4;
+            }
 
-    .hero-cta-group .btn-glass,
-    .hero-cta-group .btn-linkedin-glass {
-        padding: 9px 14px;
-        font-size: 0.85rem;
-        justify-content: center;
-        flex: 1;
-    }
+            .hero-cta-group .btn-glass,
+            .hero-cta-group .btn-linkedin-glass {
+                padding: 9px 14px;
+                font-size: 0.85rem;
+                justify-content: center;
+                flex: 1;
+            }
 
-    .scroll-down {
-        font-size: 50px !important;
-        bottom: 15px !important;
-    }
-}
+            .scroll-down {
+                font-size: 50px !important;
+                bottom: 15px !important;
+            }
+        }
 
-@keyframes mobileHeroFadeUp {
-    0% {
-        opacity: 0;
-        transform: translateY(35px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        @keyframes mobileImgFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(1.04);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes mobileTextSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(45px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     </head>
 
     <body style="background-color: rgb(0, 0, 0);">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-black p-3 fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark glass-navbar p-3 fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"
+                <a class="navbar-brand m-0" href="#"
                     style="font-family: 'Audiowide', cursive;">
                     <span style="color: white;">Ravindu</span><span
                         style="color: black; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">Buddhika</span>
                 </a>
 
-                <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                <button class="navbar-toggler border-0 shadow-none" type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#mobileGlassNav"
+                    aria-controls="mobileGlassNav"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-end"
-                    id="navbarNavAltMarkup">
+
+                <!-- Desktop Navbar Links -->
+                <div class="collapse navbar-collapse justify-content-end d-none d-lg-flex">
                     <div class="navbar-nav">
-                        <a class="nav-link active text-white"
-                            aria-current="page" href="#hero-section">Home</a>
-                        <a class="nav-link text-white"
-                            href="#experience-section">Experience</a>
-                        <a class="nav-link text-white"
-                            href="#skills-section">Skills</a>
-                        <a class="nav-link text-white"
-                            href="#projects-section">Projects</a>
-                        <a class="nav-link text-white"
-                            href="#contact-section">Contact</a>
-                        <a class="nav-link text-white"
-                            href="https://drive.google.com/file/d/1GvJR9oTCnzvzGnvlzUDhNgU9j-EETRAG/view?usp=sharing">Resume</a>
+                        <a class="nav-link active text-white" aria-current="page" href="#hero-section">Home</a>
+                        <a class="nav-link text-white" href="#experience-section">Experience</a>
+                        <a class="nav-link text-white" href="#skills-section">Skills</a>
+                        <a class="nav-link text-white" href="#projects-section">Projects</a>
+                        <a class="nav-link text-white" href="#contact-section">Contact</a>
+                        <a class="nav-link text-white" href="https://drive.google.com/file/d/1GvJR9oTCnzvzGnvlzUDhNgU9j-EETRAG/view?usp=sharing" target="_blank">Resume</a>
                     </div>
                 </div>
             </div>
         </nav>
+
+        <!-- Mobile Left-side Glass Drawer (nav එකෙන් එළියේ) -->
+        <div class="offcanvas offcanvas-start mobile-glass-drawer text-white d-lg-none"
+            tabindex="-1" id="mobileGlassNav"
+            aria-labelledby="mobileGlassNavLabel">
+            <div class="offcanvas-header border-bottom border-secondary border-opacity-25">
+                <h5 class="offcanvas-title" id="mobileGlassNavLabel"
+                    style="font-family: 'Audiowide', cursive; font-size: 1rem;">
+                    <span style="color: white;">Ravindu</span><span
+                        style="color: black; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">Buddhika</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white shadow-none"
+                    data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="navbar-nav">
+                    <a class="nav-link active text-white" aria-current="page" href="#hero-section">Home</a>
+                    <a class="nav-link text-white" href="#experience-section">Experience</a>
+                    <a class="nav-link text-white" href="#skills-section">Skills</a>
+                    <a class="nav-link text-white" href="#projects-section">Projects</a>
+                    <a class="nav-link text-white" href="#contact-section">Contact</a>
+                    <a class="nav-link text-white" href="https://drive.google.com/file/d/1GvJR9oTCnzvzGnvlzUDhNgU9j-EETRAG/view?usp=sharing" target="_blank">Resume</a>
+                </div>
+            </div>
+        </div>
 
         <div class="position-relative mt-1 bg-black text-white container-fluid"
             style="height: 700px; overflow: hidden;"
@@ -473,7 +553,6 @@
             </h4>
 
             <div class="row justify-content-center">
-                <!-- Card එක තවත් Compact කිරීමට Column Size එක col-md-5 col-lg-4 ලෙස වෙනස් කළා -->
                 <div class="col-12 col-md-5 col-lg-4">
 
                     <!-- SYIGEN Compact Glass Card -->
@@ -809,7 +888,7 @@
         </footer>
 
         <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script
             src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
@@ -846,6 +925,15 @@
 
                     observer.observe(target);
                 }
+
+                // Mobile Glass Drawer link එකක් click කළාම Auto Close වීම
+                document.querySelectorAll('#mobileGlassNav .nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        const offcanvasEl = document.getElementById('mobileGlassNav');
+                        const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+                        if (bsOffcanvas) bsOffcanvas.hide();
+                    });
+                });
 
                 fetchGitHubStats();
             });
