@@ -343,7 +343,7 @@
             }
         }
 
-        /* ================= HERO MOBILE VERTICAL LAYOUT & ANIMATIONS ================= */
+        /* ================= HERO MOBILE VERTICAL LAYOUT & EVEN CENTERING ================= */
         @media (max-width: 768px) {
             #hero-section {
                 height: 100svh !important;
@@ -382,23 +382,25 @@
             }
 
             #hero-section [data-aos="fade-up"] {
-                opacity: 0;
-                transform: translateY(45px) !important;
-                animation: mobileTextSlideUp 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards !important;
+                opacity: 1 !important;
+                transform: none !important;
             }
 
+            /* Balanced Vertical Centering: Equal breathing room below Navbar & above Bottom */
             .hero-name-vertical {
                 position: absolute;
-                left: 10px;
-                bottom: 65px;
+                left: 14px;
+                top: calc(50% + 16px);
                 writing-mode: vertical-rl;
-                transform: rotate(180deg);
-                font-size: clamp(3.4rem, 7.6svh, 4.5rem) !important;
+                font-size: clamp(2.85rem, 6.4svh, 3.9rem) !important;
                 line-height: 1;
                 margin: 0;
                 white-space: nowrap;
                 letter-spacing: 1px;
                 z-index: 4;
+                opacity: 0;
+                transform: translateY(calc(-50% + 75px)) rotate(180deg);
+                animation: mobileVerticalNameSlideUp 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
             }
 
             .hero-cta-group {
@@ -406,8 +408,8 @@
             }
 
             .scroll-down {
-                font-size: 50px !important;
-                bottom: 15px !important;
+                font-size: 46px !important;
+                bottom: 14px !important;
             }
         }
 
@@ -416,9 +418,15 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
-        @keyframes mobileTextSlideUp {
-            0% { opacity: 0; transform: translateY(45px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes mobileVerticalNameSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(calc(-50% + 75px)) rotate(180deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-50%) rotate(180deg);
+            }
         }
 
         /* ================= SHARED CYAN SECTION DIVIDER LINE ================= */
@@ -842,6 +850,13 @@
             z-index: 1060 !important;
         }
 
+        .drawer-carousel-box {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            margin-bottom: 1.5rem;
+        }
+
         @media (min-width: 769px) {
             .project-glass-drawer {
                 width: 520px !important;
@@ -881,6 +896,17 @@
             .project-glass-drawer.show,
             .project-glass-drawer.showing {
                 transform: translateY(0) !important;
+            }
+
+            /* Mobile Drawer Image: Full Screen Width, Zero Side Borders/Frame */
+            .drawer-carousel-box {
+                border-radius: 0 !important;
+                border: none !important;
+                margin-left: -1.5rem !important;
+                margin-right: -1.5rem !important;
+                margin-top: -1.5rem !important;
+                margin-bottom: 1.25rem !important;
+                width: calc(100% + 3rem) !important;
             }
         }
 
@@ -1288,10 +1314,12 @@
 
             <div class="offcanvas-body px-4 py-4 d-flex flex-column justify-content-between">
                 <div>
-                    <!-- Large Project Image Slider at Top -->
+                    <!-- Fast Auto-Sliding Project Image Carousel (Pauses on Hover/Touch) -->
                     <div id="projectDrawerCarousel"
-                        class="carousel slide rounded-4 overflow-hidden mb-4 border border-white border-opacity-10 shadow-lg"
-                        data-bs-ride="carousel">
+                        class="carousel slide drawer-carousel-box shadow-lg"
+                        data-bs-ride="carousel"
+                        data-bs-interval="1800"
+                        data-bs-pause="hover">
                         <div class="carousel-inner" id="projectDrawerSlides"></div>
                         <button class="carousel-control-prev" type="button"
                             data-bs-target="#projectDrawerCarousel" data-bs-slide="prev"
@@ -1420,6 +1448,7 @@
             });
 
             let loadedProjectsData = [];
+            let drawerCarouselInstance = null;
 
             async function loadProjectsFromJson() {
                 const track = document.getElementById('projectsTrack');
@@ -1549,6 +1578,24 @@
 
                 const bsDrawer = bootstrap.Offcanvas.getOrCreateInstance(drawerEl);
                 bsDrawer.show();
+
+                // Initialize faster drawer carousel (1800ms) + pause on hover/touch
+                const carouselEl = document.getElementById('projectDrawerCarousel');
+                if (drawerCarouselInstance) {
+                    drawerCarouselInstance.dispose();
+                }
+                if (hasMultipleImages) {
+                    drawerCarouselInstance = new bootstrap.Carousel(carouselEl, {
+                        interval: 1800,
+                        ride: 'carousel',
+                        pause: 'hover',
+                        wrap: true
+                    });
+                    drawerCarouselInstance.cycle();
+
+                    carouselEl.ontouchstart = () => drawerCarouselInstance && drawerCarouselInstance.pause();
+                    carouselEl.ontouchend = () => drawerCarouselInstance && drawerCarouselInstance.cycle();
+                }
             }
 
             function initFeaturedProjectsCarousel() {
