@@ -1,0 +1,183 @@
+[
+{
+"title": "DriveME",
+"category": "Solo Full-Stack Web Application",
+"tags": ["Spring Boot", "React", "MySQL", "Map Integration"],
+"description": "Enterprise-grade car rental system with live vehicle tracking & booking management.",
+"overview": "An end-to-end car rental management platform built independently with dedicated Customer and Admin portals. Customers can browse real-time vehicle availability and book rides, while administrators monitor fleet locations and booking approvals.",
+"isPublic": true,
+"url": "https://github.com/Ravindu-Buddhika/DriveME",
+"images": [
+"img/Driveme.png",
+"img/Screenshot (549).png",
+"img/Screenshot (509).png"
+],
+"sections": [
+{
+"number": "01",
+"heading": "WHAT MAKES IT SPECIAL",
+"content": "Goes beyond standard rental booking systems by integrating live vehicle location tracking for administrators—ensuring fleet security and legal accountability—while providing customers with complete pickup schedules, exact vehicle coordinates, and instant status updates once a booking is approved."
+},
+{
+"number": "02",
+"heading": "MY ROLE (SOLO DEVELOPER)",
+"content": "Designed, architected, and developed the entire full-stack application independently—handling database schema design, Spring Boot REST APIs, React UI workflows, and customer/admin role management."
+},
+{
+"number": "03",
+"heading": "WHAT I LEARNED",
+"content": "Gained hands-on experience with interactive map integration, real-time location coordinate handling, and structuring stateful booking approval workflows across frontend and backend layers."
+}
+]
+},
+{
+"title": "Secure-Law",
+"category": "Client-Side AI & LegalTech Solution",
+"tags": ["Python", "Gemini AI", "Ollama", "Privacy-First"],
+"description": "Client-side sensitive data masking & AI assistant built for a law firm.",
+"overview": "A privacy-focused legal documentation assistant built for a law firm to safely leverage AI in daily operations without exposing confidential client data to external cloud models.",
+"isPublic": false,
+"url": "#",
+"images": [
+"img/SECUREAI.png",
+"img/secureai-chat.jpeg",
+"img/secureai-pdf.jpeg"
+],
+"sections": [
+{
+"number": "01",
+"heading": "WHAT MAKES IT SPECIAL",
+"content": "Acts as a local privacy shield between legal staff and cloud AI. Before any prompt or document reaches the AI model, sensitive client entities are detected and masked locally—then automatically re-hydrated back into the original context when returning the AI response to the user."
+},
+{
+"number": "02",
+"heading": "MY ROLE (BA, PM & AI DEVELOPER)",
+"content": "Served as Business Analyst and Project Manager—leading client requirement gathering, continuous clarification, progress communication, and Jira sprint management—while also contributing directly to building the core AI masking pipeline."
+},
+{
+"number": "03",
+"heading": "WHAT I LEARNED",
+"content": "Executed my first production AI integration and worked with local LLMs using Ollama alongside cloud models. Learned how to balance client expectations with development team velocity and keep a cross-functional team aligned."
+}
+]
+},
+{
+"title": "Clothify",
+"category": "Standalone Desktop POS Application",
+"tags": ["Java FX", "Hibernate", "MySQL", "MVC"],
+"description": "Retail management system with modern UI and automated e-billing.",
+"overview": "My first standalone desktop application built for a clothing retail store, bringing a sleek modern user experience to JavaFX along with automated digital receipt generation.",
+"isPublic": false,
+"url": "#",
+"images": [
+"img/CLOTHIFY.png",
+"img/CLOTHIFY_orderPage.png",
+"img/CLOTHIFY_products.png"
+],
+"sections": [
+{
+"number": "01",
+"heading": "WHAT MAKES IT SPECIAL",
+"content": "Proves that traditional desktop stacks like JavaFX can deliver a clean, modern retail interface paired with automated e-bill generation—allowing store staff to process orders and email digital receipts seamlessly."
+},
+{
+"number": "02",
+"heading": "WHAT I LEARNED",
+"content": "Implemented SMTP email integration for the first time to power automated e-billing, and mastered MVC and Layered Architecture principles to keep business logic, UI controllers, and Hibernate ORM persistence cleanly separated."
+}
+]
+},
+{
+"title": "Posify",
+"category": "AI-Powered Hybrid POS System",
+"tags": ["Tauri", "Neon", "AI Forecasting", "Offline-First"],
+"description": "Next-level personal & multi-terminal retail POS with AI sales intelligence.",
+"overview": "A high-speed, lightweight desktop POS engineered for solo entrepreneurs and growing retail shops—supporting both offline and online modes across multiple synced terminals with built-in AI inventory intelligence.",
+"isPublic": false,
+"url": "#",
+"images": [
+"img/POSIFY.png",
+"img/posify order.png",
+"img/posify ai.png"
+],
+"sections": [
+{
+"number": "01",
+"heading": "WHAT MAKES IT SPECIAL",
+"content": "Works seamlessly online and offline across single or multiple connected machines. Features AI-driven sales forecasting that identifies slow-moving items with clearance suggestions, flags fast-moving stock likely to run out soon even when current inventory looks sufficient, and detects low-stock thresholds."
+},
+{
+"number": "02",
+"heading": "MY ROLE (BUSINESS ANALYST & AI DEVELOPER)",
+"content": "Led Business Analysis to tailor the workflow for solo and small-scale business owners, while contributing heavily on the development side—specifically architecting the AI sales prediction features and core retail modules."
+},
+{
+"number": "03",
+"heading": "WHAT I LEARNED",
+"content": "Deepened my expertise in batch-level inventory processing, system scalability, security vulnerability prevention, and maintaining high code quality standards for mission-critical retail software."
+}
+]
+},
+{
+"title": "Blog Next",
+"category": "Subscription Publishing Platform",
+"tags": ["Next.js", "Supabase", "Stripe"],
+"description": "Scalable blog publishing system with tiered subscription access.",
+"overview": "A modern content publishing and membership platform featuring tiered subscription plans and gated premium content access, architected to production scalability standards.",
+"isPublic": false,
+"url": "#",
+"images": [
+"img/Blognext.png",
+"img/blog next home.png",
+"img/blog next pro.png"
+],
+"sections": [
+{
+"number": "01",
+"heading": "WHAT MAKES IT SPECIAL",
+"content": "Built with a scalable multi-tier subscription architecture where reader access to premium articles is dynamically controlled based on active membership plans and real-time billing status."
+},
+{
+"number": "02",
+"heading": "MY ROLE (BUSINESS ANALYST)",
+"content": "Acted as Business Analyst for the team—defining subscription tier rules, user access flows, and feature specifications to ensure the platform was engineered with production-grade scalability."
+},
+{
+"number": "03",
+"heading": "WHAT I LEARNED",
+"content": "Gained practical experience integrating and structuring payment gateway workflows with Stripe, handling subscription lifecycles, and pairing Next.js with Supabase authentication."
+}
+]
+},
+{
+"title": "Sandakada",
+"category": "Enterprise Field Distribution Mobile App",
+"tags": ["Flutter", "Offline Resilience", "Mobile UI"],
+"description": "Offline-resilient field distribution mobile application built for a local enterprise.",
+"overview": "A cross-platform Flutter mobile application built for a local company's distribution network—connecting directly to an existing production backend while prioritizing field usability, offline resilience, and secure data handling.",
+"isPublic": false,
+"url": "#",
+"images": [
+"img/sandakada.png",
+"img/sandakada home.png",
+"img/sandakada delivery.png"
+],
+"sections": [
+{
+"number": "01",
+"heading": "WHAT MAKES IT SPECIAL",
+"content": "Engineered specifically for field distributors operating across diverse regions with unreliable connectivity—implementing frontend resilience patterns so operations continue smoothly even in low or zero-signal zones while safeguarding sensitive enterprise data."
+},
+{
+"number": "02",
+"heading": "MY ROLE (BA, UI DESIGNER, DEVELOPER & CODE REVIEWER)",
+"content": "Wore multiple hats across the lifecycle—translating distribution workflows as BA, designing intuitive field-ready mobile UI screens, developing Flutter features, and conducting peer code reviews."
+},
+{
+"number": "03",
+"heading": "WHAT I LEARNED",
+"content": "Studied and applied resilient frontend architecture patterns capable of operating reliably under varying network and infrastructure conditions across different regions of the country."
+}
+]
+}
+]
