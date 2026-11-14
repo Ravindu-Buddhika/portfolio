@@ -377,7 +377,7 @@
                 bottom: 95px;
                 left: 88px;
                 right: 20px;
-                display: flex !important;
+                display: none !important;
                 flex-direction: row;
                 gap: 10px !important;
                 width: auto !important;
@@ -419,6 +419,97 @@
                 transform: translateY(0);
             }
         }
+
+        @media (max-width: 768px) {
+            #skills-section {
+                margin-top: 2rem !important;
+                margin-bottom: 1.5rem !important;
+                padding: 1rem !important;
+            }
+
+            .tech-marquee-wrapper {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 14px !important;
+                overflow: hidden !important;
+                padding: 10px 0 !important;
+                width: 100%;
+                mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+                -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            }
+
+            .tech-marquee-row {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                gap: 12px;
+                width: max-content;
+            }
+
+            .tech-marquee-row.scroll-left {
+                animation: marqueeLeft 22s linear infinite;
+            }
+
+            .tech-marquee-row.scroll-right {
+                animation: marqueeRight 22s linear infinite;
+            }
+
+            /* අත තිබ්බම (touch/hover) pause වෙන්න */
+            .tech-marquee-wrapper:hover .tech-marquee-row,
+            .tech-marquee-wrapper:active .tech-marquee-row {
+                animation-play-state: paused;
+            }
+
+            /* Mobile එකේදී card size එක compact කිරීම */
+            .tech-marquee-wrapper .tech-card {
+                width: 112px !important;
+                height: 112px !important;
+                border-radius: 16px !important;
+                flex-shrink: 0;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+
+            .tech-marquee-wrapper .tech-card i {
+                font-size: 2.2rem !important;
+                margin-bottom: 6px !important;
+            }
+
+            .tech-marquee-wrapper .tech-card span {
+                font-size: 0.78rem !important;
+                margin-top: 4px !important;
+            }
+        }
+
+        /* Desktop එකේදී duplicate කරපු cards hide කිරීම */
+        @media (min-width: 769px) {
+            .tech-marquee-wrapper {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.5rem;
+                justify-content: center;
+                padding: 1.5rem;
+            }
+
+            .tech-marquee-row {
+                display: contents; /* Desktop එකේදී normal flex grid එකක් විදියටම පේන්න */
+            }
+
+            .marquee-clone {
+                display: none !important;
+            }
+        }
+
+        @keyframes marqueeLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes marqueeRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        
     </style>
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
@@ -647,76 +738,66 @@
                 style="width: 100px; height: 4px; background: rgba(255,255,255,0.2); margin: 10px auto; border-radius: 2px;"></div>
         </div>
 
-        <div class="d-flex flex-wrap gap-4 justify-content-center p-4"
-            data-aos="fade-up" data-aos-duration="1000">
-
-            <!-- Original Technologies -->
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fab fa-java java-color"></i>
-                <span>Java</span>
+        <div class="tech-marquee-wrapper" id="techStackWrapper">
+            <!-- Row 1 (7 items) -->
+            <div class="tech-marquee-row scroll-left" id="marqueeRow1">
+                <div class="tech-card">
+                    <i class="fab fa-java java-color"></i>
+                    <span>Java</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-leaf spring-color"></i>
+                    <span>Spring Boot</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-database mysql-color"></i>
+                    <span>MySQL</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fab fa-js js-color"></i>
+                    <span>JavaScript</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fab fa-react react-color fa-spin-slow"></i>
+                    <span>React</span>
+                </div>
+                <div class="tech-card">
+                    <i class="bi bi-arrow-repeat next-color"></i>
+                    <span>Next.js</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fab fa-python django-color"></i>
+                    <span>Django</span>
+                </div>
             </div>
 
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fas fa-leaf spring-color"></i>
-                <span>Spring Boot</span>
+            <!-- Row 2 (6 items) -->
+            <div class="tech-marquee-row scroll-right" id="marqueeRow2">
+                <div class="tech-card">
+                    <i class="fab fa-laravel laravel-color"></i>
+                    <span>Laravel</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-bolt supabase-color"></i>
+                    <span>Supabase</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-server neon-color"></i>
+                    <span>Neon DB</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-cubes tauri-color"></i>
+                    <span>Tauri</span>
+                </div>
+                <div class="tech-card">
+                    <i class="bi bi-stars gemini-color"></i>
+                    <span>Gemini API</span>
+                </div>
+                <div class="tech-card">
+                    <i class="devicon-flutter-plain flutter-color"></i>
+                    <span>Flutter</span>
+                </div>
             </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fas fa-database mysql-color"></i>
-                <span>MySQL</span>
-            </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fab fa-js js-color"></i>
-                <span>JavaScript</span>
-            </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fab fa-react react-color fa-spin-slow"></i>
-                <span>React</span>
-            </div>
-
-            <!-- Newly Added Technologies -->
-            <div class="tech-card" data-aos="fade-up">
-                <i class="bi bi-arrow-repeat next-color"></i>
-                <span>Next.js</span>
-            </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fab fa-python django-color"></i>
-                <span>Django</span>
-            </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fab fa-laravel laravel-color"></i>
-                <span>Laravel</span>
-            </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fas fa-bolt supabase-color"></i>
-                <span>Supabase</span>
-            </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fas fa-server neon-color"></i>
-                <span>Neon DB</span>
-            </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="fas fa-cubes tauri-color"></i>
-                <span>Tauri</span>
-            </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="bi bi-stars gemini-color"></i>
-                <span>Gemini API</span>
-            </div>
-
-            <div class="tech-card" data-aos="fade-up">
-                <i class="devicon-flutter-plain flutter-color"></i>
-                <span>Flutter</span>
-            </div>
-
         </div>
 
         <!-- ==================== FEATURED PROJECTS SECTION ==================== -->
@@ -933,6 +1014,18 @@
                         const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
                         if (bsOffcanvas) bsOffcanvas.hide();
                     });
+                });
+
+                ['marqueeRow1', 'marqueeRow2'].forEach(rowId => {
+                    const row = document.getElementById(rowId);
+                    if (row) {
+                        const cards = Array.from(row.children);
+                        cards.forEach(card => {
+                            const clone = card.cloneNode(true);
+                            clone.classList.add('marquee-clone');
+                            row.appendChild(clone);
+                        });
+                    }
                 });
 
                 fetchGitHubStats();
