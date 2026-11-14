@@ -287,6 +287,78 @@
         .tauri-color { color: #ffc131; }      /* Tauri Yellow */
         .gemini-color { color: #75aaff; }     /* Gemini Purple/Blue */
         .flutter-color { color: #02569b; }    /* Flutter Blue */
+
+        /* ================= HERO MOBILE VERTICAL LAYOUT ================= */
+        @media (max-width: 768px) {
+    #hero-section {
+        height: 100svh !important;
+        min-height: 600px;
+    }
+
+    .hero-bg-img {
+        width: 100%;
+        object-position: 65% center;
+    }
+
+    /* Align the fade-up animation for mobile */
+    #hero-section [data-aos="fade-up"] {
+        opacity: 0;
+        transform: translateY(35px) !important;
+        animation: mobileHeroFadeUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards !important;
+    }
+
+    /* Align the vertical name */
+    .hero-name-vertical {
+        position: absolute;
+        left: 10px;
+        bottom: 95px;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        font-size: clamp(3.3rem, 7.2svh, 4.3rem) !important;
+        line-height: 1;
+        margin: 0;
+        white-space: nowrap;
+        letter-spacing: 1px;
+        z-index: 4;
+    }
+
+    /* Align the CTA buttons */
+    .hero-cta-group {
+        position: absolute;
+        bottom: 95px;
+        left: 88px;
+        right: 20px;
+        display: flex !important;
+        flex-direction: row;
+        gap: 10px !important;
+        width: auto !important;
+        z-index: 4;
+    }
+
+    .hero-cta-group .btn-glass,
+    .hero-cta-group .btn-linkedin-glass {
+        padding: 9px 14px;
+        font-size: 0.85rem;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .scroll-down {
+        font-size: 50px !important;
+        bottom: 15px !important;
+    }
+}
+
+@keyframes mobileHeroFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
     </style>
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
@@ -336,6 +408,7 @@
             id="hero-section">
             <!--Background Image Positioned Absolutely -->
             <img src="img/WhatsApp Image 2025-12-20 at 08.43.54.jpeg"
+                class="hero-bg-img"
                 style="position: absolute; right: 0; top: 0; height: 100%; object-fit: cover; z-index: 1;"
                 alt="Profile Image">
 
@@ -345,15 +418,16 @@
                 style="z-index: 2;" data-aos="fade-up"
                 data-aos-anchor-placement="bottom-bottom"
                 data-aos-duration="3000">
-                <div class=" text-start ps-5">
-                    <h1 class="display-3 col-md-auto col-sm-auto col-auto"
+                <div class="text-start ps-5">
+                    <h1
+                        class="display-3 col-md-auto col-sm-auto col-auto hero-name-vertical"
                         style="font-family: 'Audiowide', cursive;">
                         <span style="color: white;">Ravindu</span>
                         <span
                             style="color: black; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">Buddhika</span>
                     </h1>
                     <div
-                        class="d-grid gap-2 d-md-block col-md-4 col-sm-4 col-5">
+                        class="d-grid gap-2 d-md-block col-md-4 col-sm-4 col-5 hero-cta-group">
                         <button class="btn-glass" type="button">See
                             more...</button>
                         <a
