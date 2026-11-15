@@ -174,6 +174,10 @@
             display: none;
         }
 
+        .mobile-hero-blend-marquee {
+            display: none;
+        }
+
         .hero-btn {
             background-color: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.25);
@@ -224,7 +228,7 @@
             background: linear-gradient(90deg, transparent, rgba(97, 218, 251, 0.45), transparent);
         }
 
-        /* ================= CENTERED EDITORIAL ABOUT ME SECTION (MATCHING SCREENSHOT) ================= */
+        /* ================= CENTERED EDITORIAL ABOUT ME SECTION ================= */
         .editorial-intro {
             max-width: 820px;
             margin: 5rem auto 3.5rem;
@@ -380,6 +384,27 @@
             font-weight: 500;
         }
 
+        /* Scroll-Driven Radial Convergence for Tech Stack on Desktop */
+        @media (min-width: 769px) {
+            .tech-desktop-grid {
+                perspective: 1200px;
+                transform-style: preserve-3d;
+            }
+
+            .tech-desktop-grid .tech-card {
+                opacity: 0;
+                will-change: transform, opacity;
+                transition:
+                    border-color 0.3s ease,
+                    box-shadow 0.3s ease,
+                    background 0.3s ease;
+            }
+
+            .tech-desktop-grid.is-converged .tech-card:hover {
+                transform: perspective(1000px) translateY(-10px) scale(1.07) !important;
+            }
+        }
+
         /* Brand Icon Colors */
         .java-color { color: #f89820; }
         .spring-color { color: #6db33f; }
@@ -497,38 +522,41 @@
         .progress-fill {
             height: 100%;
             border-radius: 10px;
-            transition: width 1s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* ================= FEATURED PROJECTS: FLOATING GLASS DOCK + AUTO-SCROLL ================= */
+        /* ================= FEATURED PROJECTS: 3D CARD DECK FAN-OUT + GLASS DOCK ================= */
+        .projects-deck-stage {
+            position: relative;
+            width: 100%;
+        }
+
         .projects-marquee-viewport {
             width: 100%;
-            overflow: hidden;
+            overflow-x: auto;
+            scroll-snap-type: none;
+            scroll-behavior: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
             position: relative;
-            padding: 10px 0 18px;
-            mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+            padding: 26px calc(50% - 172px) 32px;
+            perspective: 1300px;
+            cursor: grab;
+        }
+
+        .projects-marquee-viewport:active {
+            cursor: grabbing;
+        }
+
+        .projects-marquee-viewport::-webkit-scrollbar {
+            display: none;
         }
 
         .projects-track {
             display: flex;
-            gap: 24px;
+            align-items: center;
+            gap: 28px;
             width: max-content;
-            animation: projectsDesktopMarquee 34s linear infinite;
-        }
-
-        .projects-marquee-viewport:hover .projects-track,
-        .projects-marquee-viewport:focus-within .projects-track {
-            animation-play-state: paused;
-        }
-
-        @keyframes projectsDesktopMarquee {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
+            transform-style: preserve-3d;
         }
 
         .card-dock {
@@ -541,13 +569,15 @@
             flex-shrink: 0;
             scroll-snap-align: center;
             cursor: pointer;
-            transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+            transform-style: preserve-3d;
+            will-change: transform, opacity;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.25s ease;
         }
 
+        .card-dock.is-deck-center,
         .card-dock:hover {
-            border-color: rgba(97, 218, 251, 0.6);
-            transform: translateY(-6px);
-            box-shadow: 0 22px 46px rgba(0, 0, 0, 0.94), 0 0 28px rgba(97, 218, 251, 0.16);
+            border-color: rgba(97, 218, 251, 0.65);
+            box-shadow: 0 24px 52px rgba(0, 0, 0, 0.95), 0 0 32px rgba(97, 218, 251, 0.2);
         }
 
         .dock-slides {
@@ -742,7 +772,6 @@
             object-fit: cover;
         }
 
-        /* Case Study Numbered Sections */
         .case-study-block {
             position: relative;
             padding-left: 1rem;
@@ -812,6 +841,46 @@
             pointer-events: none;
         }
 
+        /* ================= DESKTOP SIDE-MARGIN SCROLL WATERMARKS ================= */
+        .desktop-side-watermarks {
+            display: none;
+        }
+
+        @media (min-width: 1180px) {
+            .desktop-side-watermarks {
+                display: block;
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 0;
+                overflow: hidden;
+            }
+
+            .hero-section,
+            #intro-section,
+            #experience-section,
+            .container,
+            #projects-section,
+            footer {
+                position: relative;
+                z-index: 2;
+            }
+
+            .bg-ravindu-mark {
+                position: absolute;
+                font-family: 'Audiowide', cursive;
+                font-size: clamp(3.4rem, 4.8vw, 5.2rem);
+                letter-spacing: 4px;
+                color: transparent;
+                -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.22);
+                user-select: none;
+                white-space: nowrap;
+                opacity: 0;
+                will-change: transform, opacity;
+                transition: opacity 0.25s ease-out;
+            }
+        }
+
         /* ================= MOBILE RESPONSIVE OVERRIDES (<= 768px) ================= */
         @media (max-width: 768px) {
             .navbar-brand {
@@ -838,7 +907,6 @@
                 display: block;
             }
 
-            /* Instant Fade + Zoom-In Face Portrait on Mobile Load */
             .hero-bg-img {
                 position: absolute;
                 right: 0;
@@ -872,50 +940,65 @@
             }
 
             .hero-name-horizontal,
-            .hero-desktop-actions {
+            .hero-desktop-actions,
+            .hero-name-vertical {
                 display: none !important;
             }
 
-            /* Balanced Vertical Centering + Left Padding Breathing Space + Instant Fade-Up */
-            .hero-name-vertical {
-                display: block !important;
+            /* Mobile Smart-Blend Dual-Row Horizontal Kinetic Marquee (Left & Right) */
+            .mobile-hero-blend-marquee {
+                display: flex !important;
+                flex-direction: column;
+                gap: 6px;
                 position: absolute;
-                left: 26px;
-                top: calc(50% + 16px);
-                transform: translateY(-50%) rotate(180deg);
-                writing-mode: vertical-rl;
-                font-family: 'Audiowide', cursive;
-                font-size: clamp(2.15rem, 6.2vh, 2.85rem);
-                line-height: 1;
-                letter-spacing: 2px;
-                margin: 0;
+                top: 52%;
+                left: 0;
+                width: 100%;
+                transform: translateY(-50%);
                 z-index: 4;
-                white-space: nowrap;
+                mix-blend-mode: difference;
                 pointer-events: none;
-                opacity: 0;
-                animation: verticalNameSlideUp 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+                overflow: hidden;
             }
 
-            @keyframes verticalNameSlideUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(calc(-50% + 80px)) rotate(180deg);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(-50%) rotate(180deg);
-                }
+            .mobile-blend-track-left {
+                display: flex;
+                width: max-content;
+                animation: mobileHeroSlideLeft 11s linear infinite;
+                will-change: transform;
             }
 
-            .hero-name-vertical .first-name {
+            .mobile-blend-track-right {
+                display: flex;
+                width: max-content;
+                animation: mobileHeroSlideRight 13s linear infinite;
+                will-change: transform;
+            }
+
+            .mobile-blend-word {
+                font-family: 'Audiowide', cursive;
+                font-size: clamp(3.85rem, 15.5vw, 5.4rem);
+                line-height: 0.96;
+                letter-spacing: 2px;
                 color: #ffffff;
-                text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9);
+                white-space: nowrap;
+                padding-right: 30px;
+                user-select: none;
             }
 
-            .hero-name-vertical .last-name {
-                color: rgba(0, 0, 0, 0.45);
-                -webkit-text-stroke: 1.2px #ffffff;
-                text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9);
+            .mobile-blend-word.outline {
+                color: transparent;
+                -webkit-text-stroke: 1.8px #ffffff;
+            }
+
+            @keyframes mobileHeroSlideLeft {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+
+            @keyframes mobileHeroSlideRight {
+                0% { transform: translateX(-50%); }
+                100% { transform: translateX(0); }
             }
 
             /* Edge-to-Edge Full Width Project Image inside Mobile Drawer */
@@ -1062,35 +1145,24 @@
                 100% { transform: translateX(0); }
             }
 
-            /* Mobile Full-Width Centered Single-Card Snap for Featured Projects (No Peeking Edge) */
+            /* Mobile Full-Width Centered Single-Card Loop for Featured Projects */
             .projects-marquee-viewport {
                 mask-image: none;
                 -webkit-mask-image: none;
-                overflow: hidden;
-                padding: 6px 0 12px;
+                overflow-x: auto;
+                padding: 8px 18px 16px;
             }
 
             .projects-track {
                 animation: none !important;
-                width: 100%;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                scroll-behavior: smooth;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                padding: 4px 18px 12px 18px;
+                width: max-content;
+                padding: 0;
                 gap: 36px;
-            }
-
-            .projects-track::-webkit-scrollbar {
-                display: none;
             }
 
             .card-dock {
                 width: calc(100vw - 36px);
                 max-width: none;
-                scroll-snap-align: center;
-                scroll-snap-stop: always;
             }
 
             #contact-section .d-flex {
@@ -1101,6 +1173,17 @@
 </head>
 
 <body>
+    <!-- ================= EXPERIMENTAL DESKTOP SIDE-MARGIN WATERMARKS ================= -->
+    <div class="desktop-side-watermarks" id="desktopSideWatermarks" aria-hidden="true">
+        <span class="bg-ravindu-mark" data-base-rot="-24" data-speed="-0.16" data-phase="0.0" style="top: 16%; left: -38px;">RAVINDU</span>
+        <span class="bg-ravindu-mark" data-base-rot="68" data-speed="0.14" data-phase="1.4" style="top: 46%; left: -75px;">RAVINDU</span>
+        <span class="bg-ravindu-mark" data-base-rot="-42" data-speed="-0.12" data-phase="2.8" style="top: 76%; left: -24px;">RAVINDU</span>
+
+        <span class="bg-ravindu-mark" data-base-rot="22" data-speed="0.15" data-phase="0.7" style="top: 22%; right: -36px;">RAVINDU</span>
+        <span class="bg-ravindu-mark" data-base-rot="-72" data-speed="-0.13" data-phase="2.1" style="top: 54%; right: -78px;">RAVINDU</span>
+        <span class="bg-ravindu-mark" data-base-rot="36" data-speed="0.17" data-phase="3.5" style="top: 82%; right: -28px;">RAVINDU</span>
+    </div>
+
     <!-- ================= FULL-WIDTH RESPONSIVE GLASS NAVBAR ================= -->
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark py-3">
         <div class="container-fluid px-3 px-lg-4 d-flex align-items-center justify-content-between">
@@ -1152,15 +1235,21 @@
         </div>
     </div>
 
-    <!-- ================= BALANCED CENTERED HERO SECTION (INSTANT ANIMATIONS WITHOUT SCROLL) ================= -->
+    <!-- ================= BALANCED CENTERED HERO SECTION ================= -->
     <section class="hero-section" id="hero-section">
-        <!-- Mobile Vertical Name -->
-        <h1 class="hero-name-vertical">
-            <span class="first-name">Ravindu</span> <span class="last-name">Buddhika</span>
-        </h1>
+        <!-- Mobile Smart-Blend Dual-Row Horizontal Kinetic Marquee (Left & Right) -->
+        <div class="mobile-hero-blend-marquee" aria-hidden="true">
+            <div class="mobile-blend-track-left">
+                <span class="mobile-blend-word">RAVINDU — RAVINDU — </span>
+                <span class="mobile-blend-word">RAVINDU — RAVINDU — </span>
+            </div>
+            <div class="mobile-blend-track-right">
+                <span class="mobile-blend-word outline">BUDDHIKA — BUDDHIKA — </span>
+                <span class="mobile-blend-word outline">BUDDHIKA — BUDDHIKA — </span>
+            </div>
+        </div>
 
         <div class="hero-grid">
-            <!-- Left / Center-Left Column: Name & Action Buttons -->
             <div class="hero-text-col">
                 <h1 class="hero-name-horizontal">
                     Ravindu <span class="last-name">Buddhika</span>
@@ -1174,7 +1263,6 @@
                 </div>
             </div>
 
-            <!-- Right / Center-Right Column: Balanced Portrait Image -->
             <div class="hero-image-col">
                 <img src="img/WhatsApp Image 2025-12-20 at 08.43.54.jpeg" class="hero-bg-img" alt="Profile Image">
             </div>
@@ -1187,7 +1275,7 @@
         </a>
     </section>
 
-    <!-- ================= CENTERED EDITORIAL ABOUT ME SECTION (MATCHING SCREENSHOT) ================= -->
+    <!-- ================= CENTERED EDITORIAL ABOUT ME SECTION ================= -->
     <section id="intro-section" class="editorial-intro text-white" data-aos="fade-up" data-aos-duration="2000">
         <span class="editorial-tag">About Me</span>
         <h2 class="editorial-title">Hi, I'm Ravindu Buddhika</h2>
@@ -1225,11 +1313,11 @@
         </span>
     </section>
 
-    <!-- ================= MOST USED LANGUAGES SECTION (WITH TOP & BOTTOM CYAN LINES + BLUE GLASS TINT) ================= -->
-    <div class="container px-3 px-md-0" data-aos="fade-up" data-aos-duration="2000">
+    <!-- ================= MOST USED LANGUAGES SECTION (SCROLL-WOUND DONUT & BARS) ================= -->
+    <div class="container px-3 px-md-0" id="languages-scroll-section">
         <div class="cyan-editorial-line"></div>
 
-        <div class="glass-box text-white">
+        <div class="glass-box text-white" id="languages-glass-box">
             <h4 style="color: white; font-family: 'Audiowide', cursive;" class="mb-4">Most Used Languages</h4>
 
             <div class="row align-items-center justify-content-center mt-4">
@@ -1260,8 +1348,8 @@
         <div class="cyan-editorial-line"></div>
     </div>
 
-    <!-- ================= MY TECH STACK SECTION (WITH TOP & BOTTOM CYAN LINES + BLUE GLASS TINT) ================= -->
-    <div class="container my-5 px-3 px-md-0" data-aos="fade-up" data-aos-duration="2000">
+    <!-- ================= MY TECH STACK SECTION (SCROLL-DRIVEN RADIAL CONVERGENCE) ================= -->
+    <div class="container my-5 px-3 px-md-0">
         <div class="cyan-editorial-line mb-5"></div>
 
         <div class="text-center mb-5" id="skills-section">
@@ -1351,8 +1439,8 @@
         <div class="cyan-editorial-line mt-5"></div>
     </div>
 
-    <!-- ================= FEATURED PROJECTS SECTION (DYNAMIC JSON + FLOATING GLASS DOCK + CASE STUDY DRAWER) ================= -->
-    <section class="container my-5 py-3 px-0 px-md-3" id="projects-section" data-aos="fade-up" data-aos-duration="2000">
+    <!-- ================= FEATURED PROJECTS SECTION (DYNAMIC JSON + 3D DECK FAN-OUT + CASE STUDY DRAWER) ================= -->
+    <section class="container my-5 py-3 px-0 px-md-3" id="projects-section">
         <div class="cyan-editorial-line mb-5"></div>
 
         <div class="text-center mb-4 px-3">
@@ -1363,9 +1451,11 @@
             <p class="text-secondary small mb-0">Click any project to explore the full case study &amp; architecture</p>
         </div>
 
-        <!-- Auto-Scrolling Floating Glass Dock Track (Populated dynamically from ./projects.json) -->
-        <div class="projects-marquee-viewport" id="projectsMarqueeViewport">
-            <div class="projects-track" id="projectsTrack"></div>
+        <!-- 3D Card Deck Fan-Out Continuous Right-to-Left Loop Viewport -->
+        <div class="projects-deck-stage">
+            <div class="projects-marquee-viewport" id="projectsMarqueeViewport">
+                <div class="projects-track" id="projectsTrack"></div>
+            </div>
         </div>
 
         <div class="cyan-editorial-line mt-5"></div>
@@ -1373,7 +1463,6 @@
 
     <!-- ================= CASE STUDY DRAWER (DESKTOP SIDE DRAWER / MOBILE BOTTOM DRAWER) ================= -->
     <div class="offcanvas offcanvas-end project-glass-drawer text-white" tabindex="-1" id="projectDetailsDrawer" aria-labelledby="projectDrawerTitle">
-        <!-- Mobile Bottom Sheet Drag Indicator -->
         <div class="drawer-grab-handle d-md-none"></div>
 
         <div class="offcanvas-header border-bottom border-secondary border-opacity-25 px-4 py-3">
@@ -1388,7 +1477,6 @@
 
         <div class="offcanvas-body px-4 py-4 d-flex flex-column justify-content-between">
             <div>
-                <!-- Faster Auto-Sliding Image Carousel with Pause on Hover/Touch -->
                 <div id="drawerProjectCarousel" class="carousel slide drawer-carousel-box mb-4" data-bs-ride="carousel" data-bs-interval="1800" data-bs-pause="hover">
                     <div class="carousel-indicators" id="drawerCarouselIndicators"></div>
                     <div class="carousel-inner" id="drawerCarouselInner"></div>
@@ -1402,18 +1490,14 @@
                     </button>
                 </div>
 
-                <!-- Project Title & Overview -->
                 <h3 style="font-family: 'Audiowide', cursive; color: #ffffff;" class="mb-2" id="projectDrawerTitle">Project Title</h3>
                 <p class="mb-3" style="font-family: 'Raleway', sans-serif; font-size: 0.94rem; line-height: 1.72; color: rgba(255,255,255,0.88);" id="drawerProjectOverview"></p>
 
-                <!-- Tech Stack Pills -->
                 <div class="d-flex flex-wrap gap-2 mb-4 pb-3 border-bottom border-secondary border-opacity-25" id="drawerProjectTags"></div>
 
-                <!-- Structured Case Study Breakdown (01, 02, 03) -->
                 <div id="drawerCaseStudySections"></div>
             </div>
 
-            <!-- Repository Action Button (Auto-disabled for Private Repos) -->
             <div class="pt-3 mt-2 border-top border-secondary border-opacity-25">
                 <a href="#" target="_blank" id="drawerRepoBtn" class="drawer-repo-btn enabled">
                     <i class="fab fa-github fs-5" id="drawerRepoIcon"></i>
@@ -1458,7 +1542,7 @@
             });
         });
 
-        // ================= DYNAMIC PROJECTS JSON + HOVER SLIDESHOW + RESPONSIVE DRAWER =================
+        // ================= DYNAMIC PROJECTS JSON + 3D DECK FAN-OUT + RESPONSIVE DRAWER =================
         const fallbackProjectsData = [
             {
                 title: "DriveME",
@@ -1552,6 +1636,12 @@
         ];
 
         let loadedProjects = [];
+        let deckRafId = null;
+        let isDeckPaused = false;
+        let isDraggingDeck = false;
+        let hasDraggedDeck = false;
+        let dragStartX = 0;
+        let dragStartScrollLeft = 0;
 
         function createProjectCardHTML(project, projectIndex) {
             const images = Array.isArray(project.images) && project.images.length > 0 ? project.images : ['img/Driveme.png'];
@@ -1598,7 +1688,6 @@
             const drawerEl = document.getElementById('projectDetailsDrawer');
             const isMobile = window.innerWidth <= 768;
 
-            // Switch between Right Side Drawer (Desktop) and Bottom Drawer (Mobile)
             if (isMobile) {
                 drawerEl.classList.remove('offcanvas-end');
                 drawerEl.classList.add('offcanvas-bottom');
@@ -1607,18 +1696,15 @@
                 drawerEl.classList.add('offcanvas-end');
             }
 
-            // Populate Header & Overview
             document.getElementById('drawerCategoryLabel').textContent = `CASE STUDY // ${project.category || 'FEATURED PROJECT'}`;
             document.getElementById('projectDrawerTitle').textContent = project.title;
             document.getElementById('drawerProjectOverview').textContent = project.overview || project.description || '';
 
-            // Populate Tags
             const tagsContainer = document.getElementById('drawerProjectTags');
             tagsContainer.innerHTML = (project.tags || []).map(tag => `
                 <span class="drawer-tag-pill">${tag}</span>
             `).join('');
 
-            // Populate Carousel Slides & Indicators
             const images = Array.isArray(project.images) && project.images.length > 0 ? project.images : ['img/Driveme.png'];
             const indicatorsEl = document.getElementById('drawerCarouselIndicators');
             const innerEl = document.getElementById('drawerCarouselInner');
@@ -1634,7 +1720,6 @@
                 </div>
             `).join('');
 
-            // Populate Case Study Numbered Sections (01, 02, 03)
             const sectionsEl = document.getElementById('drawerCaseStudySections');
             const sections = Array.isArray(project.sections) ? project.sections : [];
             sectionsEl.innerHTML = sections.map(sec => `
@@ -1644,7 +1729,6 @@
                 </div>
             `).join('');
 
-            // Configure Public vs Private Repository Button
             const repoBtn = document.getElementById('drawerRepoBtn');
             const repoBtnText = document.getElementById('drawerRepoBtnText');
             const repoIcon = document.getElementById('drawerRepoIcon');
@@ -1666,7 +1750,6 @@
                 repoBtnText.textContent = 'Private Repository — Source Code Restricted';
             }
 
-            // Initialize & start faster Bootstrap Carousel with hover/touch pause
             const carouselEl = document.getElementById('drawerProjectCarousel');
             const oldCarousel = bootstrap.Carousel.getInstance(carouselEl);
             if (oldCarousel) oldCarousel.dispose();
@@ -1677,7 +1760,6 @@
             });
             carouselInstance.cycle();
 
-            // Pause on mobile touch hold, resume on release
             carouselEl.ontouchstart = () => carouselInstance.pause();
             carouselEl.ontouchend = () => carouselInstance.cycle();
 
@@ -1685,34 +1767,140 @@
             bsOffcanvas.show();
         }
 
+        function updateProjects3DDeck() {
+            const viewport = document.getElementById('projectsMarqueeViewport');
+            const cards = document.querySelectorAll('#projectsTrack .card-dock');
+            if (!viewport || !cards.length) return;
+
+            const vpRect = viewport.getBoundingClientRect();
+            const vpCenter = vpRect.left + vpRect.width / 2;
+            const isMobile = window.innerWidth <= 768;
+
+            const vh = window.innerHeight;
+            const entryProgress = Math.min(1, Math.max(0.25, (vh * 0.92 - vpRect.top) / (vh * 0.45)));
+
+            cards.forEach((card) => {
+                const rect = card.getBoundingClientRect();
+                const cardCenter = rect.left + rect.width / 2;
+                const dist = cardCenter - vpCenter;
+
+                if (isMobile) {
+                    const norm = Math.max(-1.2, Math.min(1.2, dist / Math.max(260, viewport.offsetWidth)));
+                    const scale = Math.max(0.9, 1 - Math.abs(norm) * 0.08);
+                    card.style.transform = `scale(${scale.toFixed(3)})`;
+                    card.style.opacity = '1';
+                    card.classList.toggle('is-deck-center', Math.abs(norm) < 0.35);
+                } else {
+                    const norm = Math.max(-1.6, Math.min(1.6, dist / 365));
+                    const spread = entryProgress;
+                    const scale = Math.max(0.82, 1 - Math.abs(norm) * 0.14);
+                    const rotateY = norm * -26 * spread;
+                    const rotateZ = norm * 3.5 * spread;
+                    const translateY = Math.abs(norm) * 14 * spread;
+                    const opacity = Math.max(0.42, 1 - Math.abs(norm) * 0.38);
+
+                    card.style.transform = `perspective(1100px) translateY(${translateY.toFixed(1)}px) rotateY(${rotateY.toFixed(1)}deg) rotateZ(${rotateZ.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+                    card.style.opacity = opacity.toFixed(3);
+                    card.classList.toggle('is-deck-center', Math.abs(norm) < 0.25);
+                }
+            });
+        }
+
         function initProjectsCarouselAndInteractions() {
+            const viewport = document.getElementById('projectsMarqueeViewport');
             const track = document.getElementById('projectsTrack');
-            if (!track) return;
+            if (!viewport || !track) return;
 
-            let mobileScrollInterval = null;
-            let isMobileTrackPaused = false;
+            const total = loadedProjects.length;
+            const firstSetCard = track.children[0];
+            const middleSetCard = track.children[total];
+            const singleCycleWidth = (firstSetCard && middleSetCard)
+                ? (middleSetCard.offsetLeft - firstSetCard.offsetLeft)
+                : (total * 373);
 
-            function startMobileSnapScroll() {
-                if (mobileScrollInterval) clearInterval(mobileScrollInterval);
-                if (window.innerWidth > 768) return;
-
-                mobileScrollInterval = setInterval(() => {
-                    if (isMobileTrackPaused || window.innerWidth > 768) return;
-                    const firstCard = track.querySelector('.card-dock');
-                    if (!firstCard) return;
-
-                    const step = firstCard.offsetWidth + 36;
-                    const maxScroll = track.scrollWidth - track.clientWidth;
-
-                    if (track.scrollLeft >= maxScroll - 12) {
-                        track.scrollTo({ left: 0, behavior: 'smooth' });
-                    } else {
-                        track.scrollBy({ left: step, behavior: 'smooth' });
-                    }
-                }, 2800);
+            // Start with DriveME centered in the middle set (with Sandakada immediately on its left)
+            if (middleSetCard) {
+                viewport.scrollLeft = middleSetCard.offsetLeft - (viewport.offsetWidth / 2) + (middleSetCard.offsetWidth / 2);
             }
+            updateProjects3DDeck();
 
-            // Inner card slideshow on hover/touch + click to open Case Study Drawer
+            // Continuous smooth right-to-left infinite flow loop
+            if (deckRafId) cancelAnimationFrame(deckRafId);
+            const flowSpeed = window.innerWidth <= 768 ? 1.15 : 1.45;
+
+            function animateDeckFlow() {
+                if (!isDeckPaused && !isDraggingDeck) {
+                    viewport.scrollLeft += flowSpeed;
+
+                    if (viewport.scrollLeft >= singleCycleWidth * 2) {
+                        viewport.scrollLeft -= singleCycleWidth;
+                    } else if (viewport.scrollLeft <= singleCycleWidth * 0.25) {
+                        viewport.scrollLeft += singleCycleWidth;
+                    }
+                    updateProjects3DDeck();
+                }
+                deckRafId = requestAnimationFrame(animateDeckFlow);
+            }
+            deckRafId = requestAnimationFrame(animateDeckFlow);
+
+            // Mouse click-and-drag support
+            viewport.addEventListener('mousedown', (e) => {
+                isDraggingDeck = true;
+                hasDraggedDeck = false;
+                dragStartX = e.pageX;
+                dragStartScrollLeft = viewport.scrollLeft;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDraggingDeck) return;
+                const dx = e.pageX - dragStartX;
+                if (Math.abs(dx) > 5) hasDraggedDeck = true;
+                viewport.scrollLeft = dragStartScrollLeft - dx * 1.25;
+
+                if (viewport.scrollLeft >= singleCycleWidth * 2) {
+                    viewport.scrollLeft -= singleCycleWidth;
+                    dragStartScrollLeft -= singleCycleWidth;
+                } else if (viewport.scrollLeft <= singleCycleWidth * 0.25) {
+                    viewport.scrollLeft += singleCycleWidth;
+                    dragStartScrollLeft += singleCycleWidth;
+                }
+                updateProjects3DDeck();
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDraggingDeck = false;
+            });
+
+            // Horizontal trackpad/wheel scroll support
+            viewport.addEventListener('wheel', (e) => {
+                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                    e.preventDefault();
+                    viewport.scrollLeft += e.deltaX;
+                    if (viewport.scrollLeft >= singleCycleWidth * 2) {
+                        viewport.scrollLeft -= singleCycleWidth;
+                    } else if (viewport.scrollLeft <= singleCycleWidth * 0.25) {
+                        viewport.scrollLeft += singleCycleWidth;
+                    }
+                    updateProjects3DDeck();
+                }
+            }, { passive: false });
+
+            viewport.addEventListener('mouseenter', () => { isDeckPaused = true; });
+            viewport.addEventListener('mouseleave', () => {
+                isDeckPaused = false;
+                isDraggingDeck = false;
+            });
+            viewport.addEventListener('scroll', () => {
+                if (viewport.scrollLeft >= singleCycleWidth * 2) {
+                    viewport.scrollLeft -= singleCycleWidth;
+                } else if (viewport.scrollLeft <= singleCycleWidth * 0.25) {
+                    viewport.scrollLeft += singleCycleWidth;
+                }
+                requestAnimationFrame(updateProjects3DDeck);
+            }, { passive: true });
+            window.addEventListener('scroll', () => requestAnimationFrame(updateProjects3DDeck), { passive: true });
+            window.addEventListener('resize', updateProjects3DDeck);
+
             track.querySelectorAll('.card-dock').forEach(card => {
                 const slides = card.querySelectorAll('.dock-slide-img');
                 const dots = card.querySelectorAll('.dock-dot');
@@ -1726,14 +1914,14 @@
                 }
 
                 function startInnerSlideshow() {
-                    isMobileTrackPaused = true;
+                    isDeckPaused = true;
                     if (slides.length <= 1 || innerSlideTimer) return;
                     currentIdx = 1;
                     showSlide(currentIdx);
                     innerSlideTimer = setInterval(() => {
                         currentIdx = (currentIdx + 1) % slides.length;
                         showSlide(currentIdx);
-                    }, 1250);
+                    }, 850);
                 }
 
                 function stopAndResetInnerSlideshow() {
@@ -1743,7 +1931,7 @@
                     }
                     currentIdx = 0;
                     showSlide(0);
-                    isMobileTrackPaused = false;
+                    isDeckPaused = false;
                 }
 
                 card.addEventListener('mouseenter', startInnerSlideshow);
@@ -1759,14 +1947,14 @@
 
                 card.addEventListener('touchcancel', stopAndResetInnerSlideshow, { passive: true });
 
-                // Open Case Study Drawer on card click
-                card.addEventListener('click', () => {
+                card.addEventListener('click', (e) => {
+                    if (hasDraggedDeck) {
+                        e.preventDefault();
+                        return;
+                    }
                     openProjectDrawer(projectIndex);
                 });
             });
-
-            startMobileSnapScroll();
-            window.addEventListener('resize', startMobileSnapScroll);
         }
 
         async function loadFeaturedProjectsFromJson() {
@@ -1787,19 +1975,15 @@
             }
 
             loadedProjects = projects;
-
-            const originalCards = projects.map((p, idx) => createProjectCardHTML(p, idx)).join('');
-            const desktopCloneCards = projects.map((p, idx) => {
-                return createProjectCardHTML(p, idx).replace('<article class="card-dock"', '<article class="card-dock d-none d-md-block"');
-            }).join('');
-
-            track.innerHTML = originalCards + desktopCloneCards;
+            // Render 3 full sets for a seamless endless right-to-left loop
+            const tripledProjects = [...projects, ...projects, ...projects];
+            track.innerHTML = tripledProjects.map((p, idx) => createProjectCardHTML(p, idx % projects.length)).join('');
             initProjectsCarouselAndInteractions();
         }
 
         loadFeaturedProjectsFromJson();
 
-        // ================= GITHUB LANGUAGE STATS + CACHE RESILIENCE =================
+        // ================= GITHUB LANGUAGE STATS + SCROLL-WOUND FILL =================
         const GITHUB_USERNAME = 'Ravindu-Buddhika';
 
         const languageColors = {
@@ -1837,35 +2021,30 @@
             return `hsl(${hash % 360}, 70%, 55%)`;
         }
 
+        let sortedLanguageEntries = [];
+
         function renderLanguageStats(languageTotals) {
-            const sortedLangs = Object.entries(languageTotals)
+            sortedLanguageEntries = Object.entries(languageTotals)
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 6);
 
-            const topTotalBytes = sortedLangs.reduce((sum, item) => sum + item[1], 0);
+            const topTotalBytes = sortedLanguageEntries.reduce((sum, item) => sum + item[1], 0);
             const barsContainer = document.getElementById('github-lang-bars');
-            const donutElement = document.getElementById('github-donut');
             const topLangName = document.getElementById('top-lang-name');
             const topLangPct = document.getElementById('top-lang-pct');
 
-            if (sortedLangs.length === 0) return;
+            if (sortedLanguageEntries.length === 0) return;
 
             barsContainer.innerHTML = '';
-            let gradientStops = [];
-            let currentPercentage = 0;
 
-            sortedLangs.forEach(([lang, bytes], index) => {
+            sortedLanguageEntries.forEach(([lang, bytes], index) => {
                 const percentage = ((bytes / topTotalBytes) * 100).toFixed(1);
                 const color = getLanguageColor(lang);
 
                 if (index === 0) {
                     topLangName.innerText = lang;
-                    topLangPct.innerText = `${percentage}%`;
+                    topLangPct.innerText = '0.0%';
                 }
-
-                const nextPercentage = currentPercentage + parseFloat(percentage);
-                gradientStops.push(`${color} ${currentPercentage}% ${nextPercentage}%`);
-                currentPercentage = nextPercentage;
 
                 barsContainer.innerHTML += `
                     <div class="lang-item">
@@ -1874,22 +2053,16 @@
                                 <span class="lang-color-dot" style="background-color: ${color};"></span>
                                 ${lang}
                             </span>
-                            <span class="lang-pct">${percentage}%</span>
+                            <span class="lang-pct" data-target="${percentage}">0.0%</span>
                         </div>
                         <div class="progress-bg">
-                            <div class="progress-fill" style="width: 0%; background-color: ${color};" data-target="${percentage}%"></div>
+                            <div class="progress-fill" style="width: 0%; background-color: ${color};" data-target="${percentage}"></div>
                         </div>
                     </div>
                 `;
             });
 
-            donutElement.style.background = `conic-gradient(${gradientStops.join(', ')})`;
-
-            setTimeout(() => {
-                document.querySelectorAll('.progress-fill').forEach(bar => {
-                    bar.style.width = bar.getAttribute('data-target');
-                });
-            }, 300);
+            updateScrollWoundLanguages();
         }
 
         async function fetchGitHubStats() {
@@ -1930,6 +2103,168 @@
         }
 
         fetchGitHubStats();
+
+        // Scroll-Wound Donut Chart & Progress Bars (Works on both Desktop & Mobile)
+        function updateScrollWoundLanguages() {
+            const trigger = document.getElementById('languages-glass-box');
+            const donutElement = document.getElementById('github-donut');
+            const topLangPct = document.getElementById('top-lang-pct');
+            if (!trigger || !donutElement || !sortedLanguageEntries.length) return;
+
+            const rect = trigger.getBoundingClientRect();
+            const vh = window.innerHeight;
+            const progress = Math.min(1, Math.max(0, (vh * 0.88 - rect.top) / (vh * 0.52)));
+
+            const topTotalBytes = sortedLanguageEntries.reduce((sum, item) => sum + item[1], 0);
+            let gradientStops = [];
+            let currentPercentage = 0;
+
+            sortedLanguageEntries.forEach(([lang, bytes], index) => {
+                const fullPct = (bytes / topTotalBytes) * 100;
+                const woundPct = fullPct * progress;
+                const color = getLanguageColor(lang);
+
+                if (index === 0 && topLangPct) {
+                    topLangPct.innerText = `${woundPct.toFixed(1)}%`;
+                }
+
+                const nextPercentage = currentPercentage + woundPct;
+                gradientStops.push(`${color} ${currentPercentage.toFixed(2)}% ${nextPercentage.toFixed(2)}%`);
+                currentPercentage = nextPercentage;
+            });
+
+            if (currentPercentage < 100) {
+                gradientStops.push(`rgba(255, 255, 255, 0.08) ${currentPercentage.toFixed(2)}% 100%`);
+            }
+
+            donutElement.style.background = `conic-gradient(${gradientStops.join(', ')})`;
+
+            trigger.querySelectorAll('.progress-fill').forEach(bar => {
+                const target = parseFloat(bar.getAttribute('data-target') || '0');
+                bar.style.transition = 'none';
+                bar.style.width = `${(target * progress).toFixed(2)}%`;
+            });
+
+            trigger.querySelectorAll('.lang-pct').forEach(label => {
+                const target = parseFloat(label.getAttribute('data-target') || '0');
+                label.innerText = `${(target * progress).toFixed(1)}%`;
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(updateScrollWoundLanguages);
+        }, { passive: true });
+        window.addEventListener('resize', updateScrollWoundLanguages);
+
+        // Scroll-Driven Radial Convergence for Tech Stack Cards on Desktop
+        (function initTechStack3DConvergence() {
+            const grid = document.querySelector('.tech-desktop-grid');
+            if (!grid) return;
+
+            const cards = Array.from(grid.querySelectorAll('.tech-card'));
+            const total = cards.length;
+
+            // Precompute deterministic radial scatter offsets for each card
+            const scatterOffsets = cards.map((_, idx) => {
+                const angle = ((idx / total) * Math.PI * 2) - Math.PI / 2;
+                const radius = 140 + (idx % 3) * 45;
+                return {
+                    dx: Math.cos(angle) * radius,
+                    dy: Math.sin(angle) * radius + 70,
+                    rotZ: ((idx % 2 === 0 ? 1 : -1) * (14 + (idx % 4) * 5)),
+                    rotY: ((idx % 2 === 0 ? -1 : 1) * 26),
+                    delayFactor: (idx % 5) * 0.045
+                };
+            });
+
+            function updateTechConvergence() {
+                if (window.innerWidth <= 768) {
+                    cards.forEach(card => {
+                        card.style.transform = '';
+                        card.style.opacity = '';
+                    });
+                    return;
+                }
+
+                const rect = grid.getBoundingClientRect();
+                const vh = window.innerHeight;
+                const rawProgress = Math.min(1, Math.max(0, (vh * 0.92 - rect.top) / (vh * 0.52)));
+
+                if (rawProgress >= 0.98) {
+                    grid.classList.add('is-converged');
+                } else {
+                    grid.classList.remove('is-converged');
+                }
+
+                cards.forEach((card, idx) => {
+                    const s = scatterOffsets[idx];
+                    const localP = Math.min(1, Math.max(0, (rawProgress - s.delayFactor) / (1 - s.delayFactor)));
+                    const eased = 1 - Math.pow(1 - localP, 3);
+                    const inv = 1 - eased;
+
+                    const tx = (s.dx * inv).toFixed(1);
+                    const ty = (s.dy * inv).toFixed(1);
+                    const rz = (s.rotZ * inv).toFixed(2);
+                    const ry = (s.rotY * inv).toFixed(2);
+                    const sc = (0.72 + 0.28 * eased).toFixed(3);
+                    const op = Math.min(1, eased * 1.25).toFixed(3);
+
+                    card.style.transform = `perspective(1000px) translate3d(${tx}px, ${ty}px, 0) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${sc})`;
+                    card.style.opacity = op;
+                });
+            }
+
+            window.addEventListener('scroll', () => {
+                requestAnimationFrame(updateTechConvergence);
+            }, { passive: true });
+            window.addEventListener('resize', updateTechConvergence);
+            updateTechConvergence();
+        })();
+
+        // ================= DESKTOP SIDE-MARGIN SCROLL WATERMARKS ANIMATION =================
+        (function initDesktopSideWatermarks() {
+            const marks = document.querySelectorAll('.bg-ravindu-mark');
+            if (!marks.length) return;
+
+            let ticking = false;
+
+            function updateWatermarks() {
+                if (window.innerWidth < 1180) {
+                    ticking = false;
+                    return;
+                }
+
+                const scrollY = window.scrollY;
+                const progress = scrollY * 0.0022;
+
+                marks.forEach((el) => {
+                    const baseRot = parseFloat(el.dataset.baseRot || '0');
+                    const speed = parseFloat(el.dataset.speed || '0.12');
+                    const phase = parseFloat(el.dataset.phase || '0');
+
+                    const driftY = Math.sin(progress + phase) * 55 + (scrollY * speed * 0.25);
+                    const dynamicRot = baseRot + Math.sin(progress * 0.8 + phase) * 14;
+
+                    const wave = (Math.sin(progress * 1.15 + phase) + 1) / 2;
+                    const opacity = (0.08 + wave * 0.55).toFixed(3);
+
+                    el.style.transform = `translate3d(0, ${driftY.toFixed(1)}px, 0) rotate(${dynamicRot.toFixed(1)}deg)`;
+                    el.style.opacity = opacity;
+                });
+
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateWatermarks);
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            window.addEventListener('resize', updateWatermarks);
+            updateWatermarks();
+        })();
     </script>
 </body>
 
